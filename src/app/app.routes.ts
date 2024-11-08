@@ -4,6 +4,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    
   },
   {
     path: '',
@@ -61,6 +62,18 @@ export const routes: Routes = [
   {
     path: 'seguimiento',
     loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'rutina',
+    loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage)
+  },
+  {
+    path: 'registro',
+    loadComponent: () => import('./registro/registro.page').then( m => m.RegistroPage)
   },
   // {
   //    path: 'example',

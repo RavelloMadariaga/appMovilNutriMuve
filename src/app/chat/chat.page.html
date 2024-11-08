@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      NutriMove
+      Chat NutriMove
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,10 +15,13 @@
       <i class="fa"
         [ngClass]="{'fa-user-circle': item.from === 'user', 'fa-graduation-cap': item.from === 'bot'}"></i>
       
-      <div class="fa">
+      <div class="container2">
         <div class="bubble">
-          <div class="user-bubble">
-      
+          <!-- <div class="icon">
+            <img  src="../../assets/icon/img/nutrimove.webp" alt="">
+          </div> -->
+          <div class="container3">
+            <img class="icon" src="../../assets/icon/img/nutrimove.webp" alt="">
             <span class="responses" [innerHTML]="formatText(item.message)" ></span>
           </div>
         </div>
