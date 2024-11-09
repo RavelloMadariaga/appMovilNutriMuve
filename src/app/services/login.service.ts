@@ -11,6 +11,7 @@ export class LoginService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private auth: Auth, private firestore: Firestore) {}
+  
   async login(email: string, password: string): Promise<boolean> {
     try {
       const userCredential: UserCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -55,7 +56,7 @@ export class LoginService {
     onAuthStateChanged(this.auth, callback);
   }
 
-  getCurrentUser(): any {
-    return this.currentUserSubject.value;
+  get currentUserId(): string | null {
+    return this.auth.currentUser ? this.auth.currentUser.uid : null;
   }
 }

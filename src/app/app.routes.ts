@@ -49,9 +49,10 @@ export const routes: Routes = [
       path: 'seguimiento',
       loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage)
     },
-    
-
-
+    {
+      path: 'rutina',
+      loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage)
+    },
   ]
   },
   {
@@ -61,7 +62,8 @@ export const routes: Routes = [
   {
     path: 'seguimiento',
     loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage)
-  },  {
+  },
+  {
     path: 'registro',
     loadComponent: () => import('./registro/registro.page').then( m => m.RegistroPage)
   },

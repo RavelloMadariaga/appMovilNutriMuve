@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, query, where } from '@angular/fire/firestore';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Usuario } from './modulos.service'; 
 
 @Injectable({
   providedIn: 'root',
@@ -48,30 +47,61 @@ export class DatabaseService {
       return []; 
     }
   }
-
-  async updateUsuario(user: any) {
-    const usuarioData = {
-      nombre_user: user.nombre_user,
-      contrasena: user.contrasena,
-      email: user.email,
-      nombre: user.nombre,
-      apellido_pat: user.apellido_pat,
-      apellido_mat: user.apellido_mat,
-      peso: user.peso,
-      estatura: user.estatura,
-      mesotipo: user.mesotipo,
-      edad: user.edad,
-    };
-
+  async getUsuariosPorUid(uid: string): Promise<{ id: string; [key: string]: any } | null> {
     try {
-      const userRef = doc(this.firestore, 'usuarios', user.id);
-      await updateDoc(userRef, usuarioData);
-      console.log('Usuario actualizado');
+      const usuariosRef = collection(this.firestore, 'usuarios');
+      const q = query(usuariosRef, where('uid', '==', uid)); 
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
+        console.log('No se encontraron usuarios con ese UID');
+        return null;
+      }
+      const userDoc = snapshot.docs[0];
+      const userData = userDoc.data() as Record<string, any>;
+
+      return { id: userDoc.id, ...userData }; 
     } catch (error) {
-      console.error('Error al actualizar usuario:', error);
+      console.error('Error al obtener el usuario por UID:', error);
+      return null;
     }
   }
-
+  async updateUsuario(user: any) {
+    try {
+      const usuariosRef = collection(this.firestore, 'usuarios');
+      const q = query(usuariosRef, where("uid", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach((doc) => {
+          const userRef = doc.ref;  
+          const usuarioData = {
+            nombre_user: user.nombre_user,
+            contrasena: user.contrasena,
+            email: user.email,
+            nombre: user.nombre,
+            apellido_pat: user.apellido_pat,
+            apellido_mat: user.apellido_mat,
+            peso: user.peso,
+            estatura: user.estatura,
+            mesotipo: user.mesotipo,
+            edad: user.edad,
+            uid: user.uid
+          };
+          updateDoc(userRef, usuarioData)
+            .then(() => {
+              console.log('Usuario actualizado');
+            })
+            .catch((error) => {
+              console.error('Error al actualizar el usuario:', error);
+            });
+        });
+      } else {
+        console.error('No se encontró el documento con el UID especificado');
+      }
+    } catch (error) {
+      console.error('Error al buscar el documento:', error);
+    }
+  }
   async deleteUsuario(id: string) {
     try {
       await deleteDoc(doc(this.firestore, 'usuarios', id));
@@ -92,7 +122,7 @@ async insertRutina(rutina: any) {
     descanso: rutina.descanso,
     progresion: rutina.progresion,
     consejos: rutina.consejos,
-    id_user: "108X40a4bQihIezXqhvk", 
+    id_user: rutina.id_user 
   };
 
   try {
