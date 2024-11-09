@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      NutriMove
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-img src="../../assets/icon/img/nutrimove.webp" class="background"></ion-img>
+    <div class="content">
+      <!-- Formulario de Login -->
+      <ion-list>
+        <!-- Campo de Correo Electrónico -->
+        <ion-item>
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            required>
+          </ion-input>
+        </ion-item>
+
+        <!-- Campo de Contraseña -->
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="password" 
+            required>
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+        </ion-item>
+
+        <!-- Olvidaste la contraseña -->
+        <ion-item>
+          <a href="#">Olvidé mi contraseña</a>
+        </ion-item>
+
+        <!-- Botón para iniciar sesión -->
+        <ion-item>
+          <ion-button expand="block" (click)="onLogin()">Ingresar</ion-button>
+        </ion-item>
+      </ion-list>
+      </div>
+    </ion-card>
+
+    <!-- Enlace para crear cuenta -->
+    <div style="text-align: center;">
+      <p>No tienes cuenta</p>
+      <ion-button [routerLink]="['/registro']">Crear cuenta</ion-button>
+    </div>
+  </ion-content>
+
+

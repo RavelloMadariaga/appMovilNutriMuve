@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
-import {Rutina, Ejercicio} from '../services/modulos.service';
+import {Rutina, Ejercicio, Usuario} from '../services/modulos.service';
 import { Home1Page } from '../home1/home1.page';
 import { FormsModule } from '@angular/forms';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
@@ -30,6 +30,8 @@ export class ChatPage {
   
   rutina: Rutina = new Rutina();
 
+  Usuario: Usuario = new Usuario();
+
   constructor(private dbService: DatabaseService) { 
     this.geminiService.getMessageHistory().subscribe((res) =>{
       if(res) {
@@ -50,49 +52,66 @@ export class ChatPage {
   async sendData() {
     if (this.prompt && !this.loading) {
       this.loading = true;
-      const data = `
-      ${this.prompt} siguiendo este formato:
-      **Nombre de la Rutina:**
+      const usuarios = await this.dbService.getUsuarios();
+      const usuarioData = usuarios.length > 0 ? usuarios[0] : null;
   
-      **Objetivo:** 
+      if (usuarioData) {
+        const peso = usuarioData['peso']; 
+        const estatura = usuarioData['estatura'];
+        const edad = usuarioData['edad'];
+        const mesotipo = usuarioData['mesotipo'];
+        const imc = this.calculateIMC(peso, estatura);
+        const data = `
+        ${this.prompt} siguiendo este formato:
+        **Nombre de la Rutina:**
   
-      **Calentamiento:** 
+        **Objetivo:** 
   
-      **Ejercicios:**
+        **Calentamiento:** 
   
-      **1. Nombre del ejercicio (X series de X-X repeticiones)**
+        **Ejercicios:**
   
-      * Descripción del ejercicio.
+        **1. Nombre del ejercicio (X series de X-X repeticiones)**
   
-      **Estiramientos:** 
+        * Descripción del ejercicio.
   
-      **Frecuencia:** 
+        **Estiramientos:** 
   
-      **Descanso:** 
+        **Frecuencia:** 
   
-      **Progresión:** 
+        **Descanso:** 
   
-      **Consejos:**
+        **Progresión:** 
   
-      Los detalles del usuario son: joven de 24 años, mesomorfo, 174cm, 65kg, IMC 18.5 y hace ejercicio frecuentemente.
-      `;
-      try {
-        this.prompt = '';
-        const geminiResponse = await this.geminiService.generateText(data);
-        if (geminiResponse) {
-          this.rutina = this.processGeminiResponse(geminiResponse);
-          await this.onSubmit();
-        } else {
-          console.error('No se recibió respuesta de Gemini');
+        **Consejos:**
+  
+        Los detalles del usuario son: joven de ${edad} años, Somatotipo: (${mesotipo}), ${estatura}cm, ${peso}kg, IMC ${imc}.
+        `;
+        
+        try {
+          this.prompt = '';
+          const geminiResponse = await this.geminiService.generateText(data);
+          if (geminiResponse) {
+            this.rutina = this.processGeminiResponse(geminiResponse);
+            await this.onSubmit();
+          } else {
+            console.error('No se recibió respuesta de Gemini');
+          }
+        } catch (error) {
+          console.error('Error al obtener la rutina de Gemini:', error);
+        } finally {
+          this.loading = false;
         }
-      } catch (error) {
-        console.error('Error al obtener la rutina de Gemini:', error);
-      } finally {
-        this.loading = false;
+      } else {
+        console.error('No se encontraron los datos del usuario');
       }
     }
   }  
-
+  calculateIMC(peso: number, estatura: number): number {
+    const estaturaEnMetros = estatura / 100;
+    return peso / (estaturaEnMetros * estaturaEnMetros);
+  }
+  
   processGeminiResponse(response: string): Rutina {
     const rutina: Rutina = new Rutina();
   

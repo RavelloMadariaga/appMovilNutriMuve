@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Rutinas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Rutinas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="rutinas.length > 0">
+    <div *ngFor="let rutina of rutinas" class="rutina-card">
+      <h2>{{ rutina.nombre_rutina }}</h2>
+      <p><strong>Objetivo:</strong> {{ rutina.objetivo }}</p>
+      <p><strong>Calentamiento:</strong> {{ rutina.calentamiento }}</p>
+      <p><strong>Estiramientos:</strong> {{ rutina.estiramientos }}</p>
+      <p><strong>Frecuencia:</strong> {{ rutina.frecuencia }}</p>
+      <p><strong>Descanso:</strong> {{ rutina.descanso }}</p>
+      <p><strong>Progresión:</strong> {{ rutina.progresion }}</p>
+      <p><strong>Consejos:</strong> {{ rutina.consejos }}</p>
+      <!--
+      <div *ngIf="rutina.ejercicios.length > 0" class="ejercicios-list">
+        <h3>Ejercicios</h3>
+        <ion-list>
+          <ion-item *ngFor="let ejercicio of rutina.ejercicios">
+            <ion-label>
+              <h3>{{ ejercicio.nombre_ejercicio }}</h3>
+              <p>Series: {{ ejercicio.series }} - Repeticiones: {{ ejercicio.repeticiones }}</p>
+              <p>{{ ejercicio.descripcion }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div *ngIf="rutina.ejercicios.length === 0">
+        <p>No hay ejercicios asignados a esta rutina.</p>
+      </div>
+    -->
+    </div>
+  </div>
+  <div *ngIf="rutinas.length === 0">
+    <p>No se encontraron rutinas para este usuario.</p>
+  </div>
+</ion-content>
+

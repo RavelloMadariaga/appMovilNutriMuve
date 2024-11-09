@@ -1,5 +1,5 @@
 export class Usuario {
-  id_user: number = 0;         
+  id_user: string = "";         
   rut: string = "";             
   nombre_user: string = "";     
   contrasena: string = "";      
