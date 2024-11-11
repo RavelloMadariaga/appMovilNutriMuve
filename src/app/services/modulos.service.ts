@@ -34,14 +34,12 @@ export class Rutina {
   id_user: string = "";
 }
 
-export class Estadistica {
-  id_ent: number = 0;                   
+export class Estadistica {              
   date_recorded: Date= new Date();              
   sesiones_completadas: number = 0;     
   total_sesiones: number = 0;           
-  porcentaje_de_mejora: number = 0;     
-  tiem_total_ent: number = 0;           
+  porcentaje_de_mejora: number = 0;                
   heart_rate: number = 0;               
   imc: number = 0;                      
-  id_rutina_us: number = 0;             
+  id_user: string = "";             
 }

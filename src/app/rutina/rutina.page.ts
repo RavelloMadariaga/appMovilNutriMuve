@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
 import { LoginService } from '../services/login.service';
 
@@ -10,7 +10,7 @@ import { LoginService } from '../services/login.service';
   templateUrl: './rutina.page.html',
   styleUrls: ['./rutina.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule,CommonModule, FormsModule]
 })
 export class RutinaPage {
   rutinas: any[] = []; 
@@ -41,6 +41,15 @@ export class RutinaPage {
       }
     } catch (error) {
       console.error('Error al cargar las rutinas:', error);
+    }
+  }
+  async deleteRutina(id: string) {
+    try {
+      await this.dbService.deleteRutina(id);
+      this.rutinas = this.rutinas.filter(rutina => rutina.id !== id);
+      console.log('Rutina eliminada');
+    } catch (error) {
+      console.error('Error al eliminar rutina:', error);
     }
   }  
 }
