@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate: [loginGuard]
   },
   {
     path: '',
@@ -12,19 +14,23 @@ export const routes: Routes = [
   },
   {
     path: 'chat',
-    loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage)
+    loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage),
+    canActivate: [loginGuard]
   },
   {
     path: 'datos-personales',
-    loadComponent: () => import('./datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage)
+    loadComponent: () => import('./datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage),
+    canActivate: [loginGuard]
   },
   {
     path: 'estadistica',
-    loadComponent: () => import('./estadistica/estadistica.page').then( m => m.EstadisticaPage)
+    loadComponent: () => import('./estadistica/estadistica.page').then( m => m.EstadisticaPage),
+    canActivate: [loginGuard]
   },
   {
     path: 'home1',
-    loadComponent: () => import('./home1/home1.page').then( m => m.Home1Page)
+    loadComponent: () => import('./home1/home1.page').then( m => m.Home1Page),
+    canActivate: [loginGuard]
   },
   {
     path: 'pruebas',
@@ -32,36 +38,44 @@ export const routes: Routes = [
     children:[ {
       path: 'home',
       loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+      canActivate: [loginGuard]
     },
     {
       path: 'chat',
-      loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage)
+      loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage),
+      canActivate: [loginGuard]
     },
     {
       path: 'datos-personales',
-      loadComponent: () => import('./datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage)
+      loadComponent: () => import('./datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage),
+      canActivate: [loginGuard]
     },
     {
       path: 'estadistica',
-      loadComponent: () => import('./estadistica/estadistica.page').then( m => m.EstadisticaPage)
+      loadComponent: () => import('./estadistica/estadistica.page').then( m => m.EstadisticaPage),
+      canActivate: [loginGuard]
     },
     {
       path: 'seguimiento',
-      loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage)
+      loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage),
+      canActivate: [loginGuard]
     },
     {
       path: 'rutina',
-      loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage)
+      loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage),
+      canActivate: [loginGuard]
     },
   ]
   },
   {
     path: 'nutri-move',
-    loadComponent: () => import('./nutri-move/nutri-move.page').then( m => m.NutriMovePage)
+    loadComponent: () => import('./nutri-move/nutri-move.page').then( m => m.NutriMovePage),
+    canActivate: [loginGuard]
   },
   {
     path: 'seguimiento',
-    loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage)
+    loadComponent: () => import('./seguimiento/seguimiento.page').then( m => m.SeguimientoPage),
+    canActivate: [loginGuard]
   },
   {
     path: 'registro',
@@ -73,7 +87,8 @@ export const routes: Routes = [
   },
   {
     path: 'rutina',
-    loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage)
+    loadComponent: () => import('./rutina/rutina.page').then( m => m.RutinaPage),
+    canActivate: [loginGuard]
   },
 
   // {

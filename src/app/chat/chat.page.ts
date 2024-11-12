@@ -97,7 +97,7 @@ export class ChatPage {
   
         **Consejos:**
   
-        Los detalles del usuario son: joven de ${edad} años, Somatotipo: (${mesotipo}), ${estatura}cm, ${peso}kg, IMC ${imc}.
+        Los detalles del usuario son:  ${edad} años, Somatotipo: (${mesotipo}), ${estatura}cm, ${peso}kg, IMC ${imc}.
       `;
   
       try {

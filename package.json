@@ -30,6 +30,7 @@
     "@google/generative-ai": "^0.21.0",
     "@ionic/angular": "^8.0.0",
     "firebase": "^11.0.1",
+    "firestore": "^1.1.6",
     "ionicons": "^7.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

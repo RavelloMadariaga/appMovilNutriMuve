@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
+  idUser: string | null = null;
   private currentUserSubject = new BehaviorSubject<any>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
@@ -58,5 +59,9 @@ export class LoginService {
 
   get currentUserId(): string | null {
     return this.auth.currentUser ? this.auth.currentUser.uid : null;
+  }
+  recuperar(){
+    this.idUser = this.currentUserId;
+    return this.idUser;
   }
 }

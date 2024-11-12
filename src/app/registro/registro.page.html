@@ -41,3 +41,58 @@
 </ion-content>
 
 
+
+
+
+<script>
+  var Fn = {
+      validaRut: function(rutCompleto) {
+          if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
+              return false;
+          var tmp = rutCompleto.split('-');
+          var digv = tmp[1];
+          var rut = tmp[0];
+          if (digv == 'K') digv = 'k';
+          return (Fn.dv(rut) == digv);
+      },
+      dv: function(T) {
+          var M = 0,
+              S = 1;
+          for (; T; T = Math.floor(T / 10))
+              S = (S + T % 10 * (9 - M++ % 6)) % 11;
+          return S ? S - 1 : 'k';
+      }
+  }
+  //1.-  Poner placeholder:
+  $("#order_shipping_address_taxid").attr("placeholder", "xxxxxxxx-x (sin puntos)")
+  $("#order_billing_address_taxid").attr("placeholder", "xxxxxxxx-x (sin puntos)")
+  // 2.- Validar on Submit
+  $("#checkout").submit(function(evt) {
+      let sameAsBilling = $("#shipping_same_as_billing").is(":checked");
+      let rutShipping = $("#order_shipping_address_taxid").val();
+      let rutBilling = $("#order_billing_address_taxid").val();
+      if (sameAsBilling) {
+          if (Fn.validaRut(rutShipping)) {
+              return;
+          } else {
+              evt.preventDefault();
+              alert("Formato de RUT debe ser xxxxxxxx-x sin puntos");
+          }
+      } else {
+          console.log("validar dos rut:" + rutShipping + "&" + rutBilling);
+          if (Fn.validaRut(rutShipping)) {
+              return;
+          } else {
+              evt.preventDefault();
+              alert("Formato de RUT en dirección de envio debe ser xxxxxxxx-x sin puntos");
+          }
+          if (Fn.validaRut(rutBilling)) {
+              return;
+          } else {
+              evt.preventDefault();
+              alert("Formato de RUT en dirección de facturación debe ser xxxxxxxx-x sin puntos");
+          }
+      }
+  });
+  </script>
+
